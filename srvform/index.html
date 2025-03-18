@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Juego de Adivinanza</title>
+</head>
+
+<body>
+
+  <h1>Adivinanza</h1>
+  
+  <p id="adivinanza">¿Qué es amarillo y tiene un montón de agujeros? (Escribe tu respuesta)</p>
+
+  <form onsubmit="procesaForm(event)">
+    <p>
+      <label>
+        Respuesta:
+        <input name="respuesta" required>
+      </label>
+    </p>
+    <p><button type="submit">Enviar</button></p>
+  </form>
+
+  <script type="module">
+    import { exportaAHtml } from "./lib/js/exportaAHtml.js"
+    import { muestraError } from "./lib/js/muestraError.js"
+    import { submitForm } from "./lib/js/submitForm.js"
+
+    /**
+     * @param {Event} event
+     */
+    async function procesaForm(event) {
+      try {
+        const respuesta = await submitForm("srv/procesa.php", event)
+        alert(respuesta.body)
+      } catch (error) {
+        muestraError(error)
+      }
+    }
+
+    exportaAHtml(procesaForm)
+  </script>
+
+</body>
+
+</html>
